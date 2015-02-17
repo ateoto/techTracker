@@ -1,0 +1,13 @@
+{
+  "name": "TechTracker",
+  "version": "0.0.0",
+  "authors": [
+    "Andrew Owen <andrew@moduscreate.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.3.11",
+    "bootstrap": "~3.3.2"
+  }
+}

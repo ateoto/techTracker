@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html ng-app="tracker">
+<head>
+	<title>Tech Tracker</title>
+	<link rel="stylesheet" type="text/css" href=" bower_components/bootstrap/dist/css/bootstrap.min.css">
+</head>
+	<body ng-controller="TrackerController as tracker">
+		<div ng-repeat="device in tracker.devices">
+			<h1> {{device.name}} </h1>
+			<h2> {{device.quantity}} </h2>
+			<p>  {{device.description}} </p>
+			<button ng-show = "device.inStock"> Check Out </button>		
+		</div>
+		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+	</body>
+</html>
+
