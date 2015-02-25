@@ -4,19 +4,37 @@
 	<title>Tech Tracker</title>
 	<link rel="stylesheet" type="text/css" href=" bower_components/bootstrap/dist/css/bootstrap.min.css">
 </head>
-	<body ng-controller="TrackerController as tracker">
-		<div class="container" ng-repeat="device in tracker.devices">
-			<h1>{{device.name}}</h1>
+	<body class="list-group"  ng-controller="TrackerController as tracker">
+		
+	<!-- Main App Model Model -->
+		<div class="container list-group-item" ng-repeat="device in tracker.devices">
+			<h1>
+				{{device.name}}
+				<em class="pull-right">
+					{{device.price | currency }}
+				</em>
+			</h1>
 			<h2>{{device.maker | uppercase }}</h2>
-			<h2>{{device.price | currency }}
 			<h2>{{device.quantity}}</h2>
 			<p>{{device.description | uppercase }}</p>
 			<p>{{device.checkIn | date:'MM/dd/yyyy'}}</p>
-			<ul class="image-small" ng-repeat="image in device.images">	
-				<img ng-src="{{image.full}}">
-			</ul>
-			<br/><button ng-show = "device.inStock"> Check Out </button>		
+			<div class="gallery" style="width: 400px;">
+				<ul ng-repeat="image in device.images" ng-show="device.images.length">
+					<img class="img center-block" ng-src="{{image.full}}">
+				</ul>
+			</div>
+			<section>
+				<ul class="nav nav-pills" >
+					<li> <a href ng-click="tracker.checkOut(device)" ng-show="device.inStock">Check Out</a></li>
+					<li> <a href ng-click="tracker.checkIn(device)">Check In</a></li>
+					<li> <a href ng-click="tracker.activeTab = 10">Track Device</a></li>
+					<li> <a href ng-click="tracker.activeTab = 15">Leave Feedback</a></li>
+				</ul>
+			</section>
+					
 		</div>
+
+		<!-- Attached libraries -->
 		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
 		<script type="text/javascript" src="app.js"></script>
 	</body>
