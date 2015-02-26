@@ -43,7 +43,11 @@
 				checkIn: Date.now(),
 				checkOut: "",
 				inStock: true,
-				images: [],	
+				images: [
+					{
+						full:'images/nexus6_full.png'
+					},
+				],	
 			},
 		];
 
