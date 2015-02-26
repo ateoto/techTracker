@@ -52,8 +52,22 @@
 		];
 
 		this.devices = devices;
-		this.activeTab = 2;
 
+
+
+	});
+
+	app.controller('PanelController', function(){
+		this.tab = 4;
+		
+		this.selectTab = function(setTab) {
+			this.tab = setTab;
+		};
+
+		this.isSelected = function(checkTab){
+			return this.tab === checkTab;
+		};
+		
 		this.checkOut = function(device) {
 			console.log("You checked out yo!");
 			console.log(device);
@@ -70,8 +84,7 @@
 			if (device.quantity >= 1) {
 				device.inStock = true;
 			}
-		}
-
+		};
 	});
 
 })();

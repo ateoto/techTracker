@@ -16,20 +16,46 @@
 			</h1>
 			<h2>{{device.maker | uppercase }}</h2>
 			<h2>{{device.quantity}}</h2>
-			<p>{{device.description | uppercase }}</p>
 			<p>{{device.checkIn | date:'MM/dd/yyyy'}}</p>
 			<div class="gallery" style="width: 400px;">
 				<ul ng-repeat="image in device.images" ng-show="device.images.length">
 					<img class="img center-block" ng-src="{{image.full}}">
 				</ul>
 			</div>
-			<section>
+			<section ng-controller="PanelController as panel">
 				<ul class="nav nav-pills" >
-					<li> <a href ng-click="tracker.checkOut(device)" ng-show="device.inStock">Check Out</a></li>
-					<li> <a href ng-click="tracker.checkIn(device)">Check In</a></li>
-					<li> <a href ng-click="tracker.activeTab = 10">Track Device</a></li>
-					<li> <a href ng-click="tracker.activeTab = 15">Leave Feedback</a></li>
+					<li ng-class="{ active:panel.isSelected(1) }">
+						<a href ng-click="panel.selectTab(1)" ng-show="device.inStock">Check Out</a>
+					</li>
+					<li ng-class="{ active:panel.isSelected(2) }">
+						<a href ng-click="panel.selectTab(2)">Check In</a>
+					</li>
+					<li ng-class="{ active:panel.isSelected(3) }">
+						<a href ng-click="panel.selectTab(3)">Track Device</a>
+					</li>
+					<li ng-class="{ active:panel.isSelected(4) }">
+						<a href ng-click="panel.selectTab(4)">Description</a>
+					</li>
 				</ul>
+				<div class="panel" ng-show="panel.isSelected(1)">
+					<h4>Check Out</h4>
+					<input type="text" placeholder="First Name">
+					</br><input type="text" placeholder="Last Name">
+					</br><button ng-click="panel.checkOut(device)">Check Out</button>
+				</div>
+				<div class="panel" ng-show="panel.isSelected(2)">
+					<h4>Check In</h4>
+					<input type="text" placeholder="Initials">
+					</br><button ng-click="panel.checkIn(device)">Check In</button>
+				</div>
+				<div class="panel" ng-show="panel.isSelected(3)">
+					<h4>Map Data will go here eventually</h4>
+					<p> map data </p>
+				</div>
+				<div class="panel" ng-show="panel.isSelected(4)">
+					<h4>Description</h4>
+					<p>{{device.description | uppercase }}</p>
+				</div>
 			</section>
 					
 		</div>
