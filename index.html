@@ -36,7 +36,12 @@
 					<li ng-class="{ active:panel.isSelected(4) }">
 						<a href ng-click="panel.selectTab(4)">Description</a>
 					</li>
+					<li ng-class="{ active:panel.isSelected(5) }">
+						<a href ng-click="panel.selectTab(5)">Reviews</a>
+					</li>
 				</ul>
+
+				<!-- Tab Control Panels -->
 				<div class="panel" ng-show="panel.isSelected(1)">
 					<h4>Check Out</h4>
 					<input type="text" placeholder="First Name">
@@ -56,6 +61,30 @@
 					<h4>Description</h4>
 					<p>{{device.description | uppercase }}</p>
 				</div>
+				<div class="panel list-group-item" ng-show="panel.isSelected(5)">
+					<h4>Reviews</h4>
+					
+					<form name="reviewForm">
+						<blockquote>
+							<b>Stars: {{review.stars}}</b>
+							</br>{{review.body}}
+							<footer><cite>by: {{review.author}}</cite></footer>
+						</blockquote>
+						<div class="form-group">
+							<label for="reviewStars">rating:</label>
+							<select class="form-control" ng-model="review.stars" id="reviewStars" placeholder="nothing selected">
+								<option value="1">1 star</option>
+								<option value="2">2 stars</option>
+							</select>		
+							<label for="reviewBody">additonal notes:</label>
+								<textarea class="form-control" rows="3" ng-model="review.body" id="reviewBody" placeholder="say what you want!"></textarea>
+							<label for="reviewEmail">by:</label>
+							<input ng-model="review.author" type="email" class="form-control" id="reviewEmail" placeholder="email"/>
+							</br><input type="submit" class="form-control" value="Submit" />
+						</div>
+					</form>
+				</div>
+
 			</section>
 					
 		</div>
