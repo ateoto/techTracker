@@ -19,7 +19,8 @@
 					{
 						full: 'images/iphone6_full.png'
 					},
-				],		
+				],
+				reviews: []
 			}, {
 				name: 'Galaxy S5',
 				maker: 'Samsung',
@@ -33,7 +34,8 @@
 					{
 						full: 'images/galaxys5_full.png'
 					},
-				],	
+				],
+				reviews: []	
 			}, {
 				name: 'Nexus 6',
 				maker: 'Google',
@@ -47,7 +49,8 @@
 					{
 						full:'images/nexus6_full.png'
 					},
-				],	
+				],
+				reviews: []	
 			},
 		];
 
@@ -58,7 +61,7 @@
 	});
 
 	app.controller('PanelController', function(){
-		this.tab = 4;
+		this.tab = 1;
 		
 		this.selectTab = function(setTab) {
 			this.tab = setTab;
@@ -91,8 +94,11 @@
 		this.review={};
 
 		this.addReview = function(device){
-			
-		}
+			if (this.reviewForm.$valid) {
+			device.reviews.push(this.review);
+			this.review={};
+			}
+		};
 	});
 
 })();

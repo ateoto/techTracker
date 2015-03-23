@@ -6,22 +6,23 @@
 </head>
 	<body class="list-group"  ng-controller="TrackerController as tracker">
 		
-	<!-- Main App Model Model -->
+	<!-- Main App Model -->
 		<div class="container list-group-item" ng-repeat="device in tracker.devices">
+			<!-- Device info -->
 			<h1>
 				{{device.name}}
-				<em class="pull-right">
-					{{device.price | currency }}
-				</em>
+				<em class="pull-right">{{device.price | currency }}</em>
 			</h1>
 			<h2>{{device.maker | uppercase }}</h2>
 			<h2>{{device.quantity}}</h2>
 			<p>{{device.checkIn | date:'MM/dd/yyyy'}}</p>
+			<!-- Device images -->
 			<div class="gallery" style="width: 400px;">
 				<ul ng-repeat="image in device.images" ng-show="device.images.length">
 					<img class="img center-block" ng-src="{{image.full}}">
 				</ul>
 			</div>
+			<!-- Device option tabs -->
 			<section ng-controller="PanelController as panel">
 				<ul class="nav nav-pills" >
 					<li ng-class="{ active:panel.isSelected(1) }">
@@ -63,27 +64,38 @@
 				</div>
 				<div class="panel list-group-item" ng-show="panel.isSelected(5)">
 					<h4>Reviews</h4>
+					
+					<!-- Submitted Review Forms -->
+					<blockquote ng-repeat="review in device.reviews">
+						<b>{{review.stars}} Stars</b>
+						</br>{{review.body}}
+						<footer><cite>by: {{review.author}}</cite></footer>
+					</blockquote>
+					
 					<!-- Live Preview -->
-					<form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
-					ng-submit="reviewCtrl.addReview(device)">
+					<form name="reviewCtrl.reviewForm" ng-controller="ReviewController as reviewCtrl"
+					ng-submit="reviewCtrl.addReview(device)" novalidate>
 						<blockquote>
-							<b>Stars: {{review.Ctrl.review.stars}}</b>
-							</br>{{review.Ctrl.review.body}}
-							<footer><cite>by: {{review.Ctrl.review.author}}</cite></footer>
+							<b>Stars: {{reviewCtrl.review.stars}}</b>
+							</br>{{reviewCtrl.review.body}}
+							<footer><cite>by: {{reviewCtrl.review.author}}</cite></footer>
 						</blockquote>
-						<!-- review Form from tutorial -->
+						
+						<!-- Review Form from tutorial -->
 						<div class="form-group">
 							<label for="reviewStars">rating:</label>
-							<select class="form-control" ng-model="reviewCtrl.review.stars" id="reviewStars">
+							<select class="form-control" ng-model="reviewCtrl.review.stars" id="reviewStars" required>
+								<option value="" disabled selected>Rate this device!</option>
 								<option value="1">1 star</option>
 								<option value="2">2 stars</option>
 							</select>		
 							<label for="reviewBody">additonal notes:</label>
-								<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.body" id="reviewBody" placeholder="say what you want!"></textarea>
+								<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.body" id="reviewBody" placeholder="say what you want!" required></textarea>
 							<label for="reviewEmail">by:</label>
-							<input ng-model="reviewCtrl.review.author" type="email" class="form-control" id="reviewEmail" placeholder="email"/>
-							</br><input type="submit" class="form-control" value="Submit" />
+							<input ng-model="reviewCtrl.review.author" type="email" class="form-control" id="reviewEmail" placeholder="email" required/>
+							</br><input type="submit" class="form-control" value="Submit" ng-disabled="reviewCtrl.reviewForm.$invalid"/>
 						</div>
+
 					</form>
 				</div>
 
