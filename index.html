@@ -63,23 +63,25 @@
 				</div>
 				<div class="panel list-group-item" ng-show="panel.isSelected(5)">
 					<h4>Reviews</h4>
-					
-					<form name="reviewForm">
+					<!-- Live Preview -->
+					<form name="reviewForm" ng-controller="ReviewController as reviewCtrl"
+					ng-submit="reviewCtrl.addReview(device)">
 						<blockquote>
-							<b>Stars: {{review.stars}}</b>
-							</br>{{review.body}}
-							<footer><cite>by: {{review.author}}</cite></footer>
+							<b>Stars: {{review.Ctrl.review.stars}}</b>
+							</br>{{review.Ctrl.review.body}}
+							<footer><cite>by: {{review.Ctrl.review.author}}</cite></footer>
 						</blockquote>
+						<!-- review Form from tutorial -->
 						<div class="form-group">
 							<label for="reviewStars">rating:</label>
-							<select class="form-control" ng-model="review.stars" id="reviewStars" placeholder="nothing selected">
+							<select class="form-control" ng-model="reviewCtrl.review.stars" id="reviewStars">
 								<option value="1">1 star</option>
 								<option value="2">2 stars</option>
 							</select>		
 							<label for="reviewBody">additonal notes:</label>
-								<textarea class="form-control" rows="3" ng-model="review.body" id="reviewBody" placeholder="say what you want!"></textarea>
+								<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.body" id="reviewBody" placeholder="say what you want!"></textarea>
 							<label for="reviewEmail">by:</label>
-							<input ng-model="review.author" type="email" class="form-control" id="reviewEmail" placeholder="email"/>
+							<input ng-model="reviewCtrl.review.author" type="email" class="form-control" id="reviewEmail" placeholder="email"/>
 							</br><input type="submit" class="form-control" value="Submit" />
 						</div>
 					</form>
