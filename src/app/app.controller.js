@@ -7,6 +7,8 @@
 	app.controller('TrackerController',function($http){
 		var tracker = this;
 
+		tracker.devices = [];
+
 		$http.get('deviceData.json').then(function(response){
 			tracker.devices = response.data;
 		});

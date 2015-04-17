@@ -9,11 +9,9 @@
 	<!-- Main App Model -->
 		<div class="container list-group-item" ng-repeat="device in tracker.devices">
 			<!-- Device info -->
-			<h1>
-				<tt-device-title></tt-device-title>
-			</h1>
-			<h2>{{device.maker | uppercase }}</h2>
-			<h2>{{device.quantity}}</h2>
+			<h1>{{device.name}}</h1>
+			<h3>{{device.maker | uppercase }}</h3>
+			<h3>{{device.quantity}}</h3>
 			<p>{{device.checkIn | date:'MM/dd/yyyy'}}</p>
 			
 			<!-- Device images -->
@@ -35,8 +33,8 @@
 		<!-- Attached libraries -->
 		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
 		<script type="text/javascript" src="app.js"></script>
-		<script type="text/javascript" src="controllers.js"></script>
-		<script type="text/javascript" src="directives.js"></script>
+		<script type="text/javascript" src="src/app/app.controller.js"></script>
+		<script type="text/javascript" src="src/app/directives/app.directive.js"></script>
 	</body>
 </html>
 
