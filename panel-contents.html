@@ -1,0 +1,65 @@
+<!-- This contains all tabs and their contents on the main index.html page -->
+
+<!-- Check Out Panel Contents -->
+<div class="panel" ng-show="panel.isSelected(1)">
+	<h4>Check Out</h4>
+	<input type="text" placeholder="First Name">
+	</br><input type="text" placeholder="Last Name">
+	</br><button ng-click="panel.checkOut(device)">Check Out</button>
+</div>
+
+<!-- Check In Panel Contents -->
+<div class="panel" ng-show="panel.isSelected(2)">
+	<h4>Check In</h4>
+	<input type="text" placeholder="Initials">
+	</br><button ng-click="panel.checkIn(device)">Check In</button>
+</div>
+
+<!-- Map Data Panel Contents -->
+<div class="panel" ng-show="panel.isSelected(3)">
+	<h4>Map Data will go here eventually</h4>
+	<p> map data </p>
+</div>
+
+<!-- Description Panel Contents -->
+<div class="panel" ng-show="panel.isSelected(4)">
+	<h4>Description</h4>
+	<p>{{device.description | uppercase }}</p>
+</div>
+
+<!-- Review Panel Contents -->
+<div class="panel list-group-item" ng-show="panel.isSelected(5)">
+	<h4>Reviews</h4>
+	<!-- Posted Reviews -->
+	<blockquote ng-repeat="review in device.reviews">
+		<b>{{review.stars}} Stars</b>
+		</br>{{review.body}}
+		<footer><cite>by: {{review.author}} on {{review.createdOn | date}}</cite></footer>
+	</blockquote>
+	
+	<!-- Live Preview -->
+	<form name="reviewCtrl.reviewForm" ng-controller="ReviewController as reviewCtrl"
+	ng-submit="reviewCtrl.addReview(device)" novalidate>
+		<blockquote>
+			<b>Stars: {{reviewCtrl.review.stars}}</b>
+			</br>{{reviewCtrl.review.body}}
+			<footer><cite>by: {{reviewCtrl.review.author}}</cite></footer>
+		</blockquote>
+		
+		<!-- Review Form -->
+		<div class="form-group">
+			<label for="reviewStars">rating:</label>
+			<select class="form-control" ng-model="reviewCtrl.review.stars" id="reviewStars" required>
+				<option value="" disabled selected>Rate this device!</option>
+				<option value="1">1 star</option>
+				<option value="2">2 stars</option>
+			</select>		
+			<label for="reviewBody">additonal notes:</label>
+				<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.body" id="reviewBody" placeholder="say what you want!" required></textarea>
+			<label for="reviewEmail">by:</label>
+			<input ng-model="reviewCtrl.review.author" type="email" class="form-control" id="reviewEmail" placeholder="email" required/>
+			</br><input type="submit" class="form-control" value="Submit" ng-disabled="reviewCtrl.reviewForm.$invalid"/>
+		</div>
+		
+	</form>
+</div>
