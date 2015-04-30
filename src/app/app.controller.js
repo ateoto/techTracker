@@ -7,11 +7,19 @@
 	app.controller('TrackerController',function($http){
 		var tracker = this;
 
+		this.loggedIn = false;
+
 		tracker.devices = [];
 
 		$http.get('deviceData.json').then(function(response){
 			tracker.devices = response.data;
 		});
+
+		this.logIn = function() {
+			if (this.userName == "andrew@moduscreate.com" && this.userPassword == "moduscreate") {
+				this.loggedIn = true;
+			}
+		};
 	});
 
 	app.controller('PanelController', function(){
