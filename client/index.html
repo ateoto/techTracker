@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app="tracker">
+<head>
+	<title>Tech Tracker</title>
+	<link rel="stylesheet" type="text/css" href="src/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="src/assets/custom.css">
+</head>
+	<body>
+		<tt-app-header></tt-app-header>
+		<div ui-view></div>
+		<!-- Attached libraries -->
+		<script type="text/javascript" src="src/bower_components/angular/angular.min.js"></script>
+		<script type="text/javascript" src="app.js"></script>
+		<script type="text/javascript" src="src/app/app.controller.js"></script>
+		<script type="text/javascript" src="src/app/directives/app.directive.js"></script>
+		<script type="text/javascript" src="src/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+	</body>
+</html>
+
