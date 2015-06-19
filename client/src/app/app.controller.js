@@ -12,7 +12,7 @@
 
 		tracker.devices = [];
 
-		$http.get('deviceData.json').then(function(response){
+		$http.get('http://localhost:3000/api/devices').then(function(response){
 			tracker.devices = response.data;
 		});
 
@@ -56,6 +56,7 @@
 		};
 	});
 
+	// Reviews
 	app.controller('ReviewController', function(){
 		this.review={};
 
