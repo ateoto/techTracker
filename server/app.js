@@ -5,36 +5,17 @@ var Schema = mongoose.Schema;
 var mongo = mongoose.connect('mongodb://localhost/techTracker');
 var ObjectId = require('mongoose').Types.ObjectId;	
 
-var deviceSchema = {
-	name: String,
-	make: String,
-	quantity: Number
-}
+var Device = require("./devices");
+var Review = require("./reviews");
+var User = require("./users");
 
-var reviewSchema = {
-	body: String,
-	deviceId: String 
-}
 
-var Device = mongoose.model('Device', deviceSchema, 'devices');
-var Review = mongoose.model("Review", reviewSchema, 'reviews');
+
 
 var app = express();
 
 app.get('/api/devices', function(req, res) {
-	Device.find(function (err,docs) {
-
-		docs.forEach(function(doc) {
-			var id = doc._id.toString();
-			
-			Review.find({ deviceId: id },function(err,reviews) {
-				doc.reviews = reviews
-			})
-
-		});
-		
-		res.send(docs);
-	})
+	// WTF do I do here?
 });
 
 //Route directory for app client folder
