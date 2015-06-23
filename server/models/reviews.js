@@ -6,10 +6,9 @@ var ReviewSchema = Schema ({
 	stars: Number,
 	text: String,
 	device: {
-		type: Schema.Types,ObjectId,
+		type: Schema.Types.ObjectId,
 		ref: "Device"
 	}
-
 });
 
 
