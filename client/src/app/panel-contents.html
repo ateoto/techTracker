@@ -34,16 +34,18 @@
 	<!-- Posted Reviews -->
 	<blockquote ng-repeat="review in device.reviews">
 		<b>{{review.stars}} Stars</b>
-		</br>{{review.body}}
+		</br>{{review.text}}
 		<footer><cite>by: {{review.author}} on {{review.createdOn | date}}</cite></footer>
 	</blockquote>
 	
+	<h4>Live Preview</h4>
+
 	<!-- Live Preview -->
 	<form name="reviewCtrl.reviewForm" ng-controller="ReviewController as reviewCtrl"
 	ng-submit="reviewCtrl.addReview(device)" novalidate>
 		<blockquote>
 			<b>Stars: {{reviewCtrl.review.stars}}</b>
-			</br>{{reviewCtrl.review.body}}
+			</br>{{reviewCtrl.review.text}}
 			<footer><cite>by: {{reviewCtrl.review.author}}</cite></footer>
 		</blockquote>
 		
@@ -55,8 +57,8 @@
 				<option value="1">1 star</option>
 				<option value="2">2 stars</option>
 			</select>		
-			<label for="reviewBody">additonal notes:</label>
-				<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.body" id="reviewBody" placeholder="say what you want!" required></textarea>
+			<label for="reviewText">additonal notes:</label>
+				<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.text" id="reviewBody" placeholder="say what you want!" required></textarea>
 			<label for="reviewEmail">by:</label>
 			<input ng-model="reviewCtrl.review.author" type="email" class="form-control" id="reviewEmail" placeholder="email" required/>
 			</br><input type="submit" class="form-control" value="Submit" ng-disabled="reviewCtrl.reviewForm.$invalid"/>
