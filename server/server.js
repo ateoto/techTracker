@@ -78,14 +78,25 @@ router.route('/devices/:device_id/reviews')
 
 })
 
-.get(function(req, res){
-	Review.find()
-	.populate('device')
-	.exec(function(err, reviews){
-		if (err)
+// .get(function(req, res){
+// 	Review.find()
+// 	.populate('device')
+// 	.exec(function(err, reviews){
+// 		if (err)
+// 			res.send(err);
+
+// 		res.json(reviews);
+// 	});
+// });
+
+.get(function(req, res) {
+	Device.findById(req.params.device_id)
+	.populate('reviews')
+	.exec(function(err, device) {
+		if (err) 
 			res.send(err);
 
-		res.json(reviews);
+		res.json(device.reviews);
 	});
 });
 
@@ -101,12 +112,6 @@ router.route('/devices')
 		device.make = req.body.make;         // set the devices make
 		device.quantity = req.body.quantity  // set the devices quantity
 
-		var review = new Review();
-		review.stars = req.body.stars;
-		review.device = device._id;
-		device.reviews = review._id;
- 
-
 		// save the device and check for errors
 		device.save(function(err) {
 			if (err)
@@ -117,11 +122,12 @@ router.route('/devices')
 	})
 
 	// get all the devices (accessed at GET http://localhost:3000/api/devices)
-	.get(function(req, res) {
-		Device.find(function(err, devices) {
-			if (err)
+	.get(function(req, res){
+		Device.find()
+		.populate('reviews')
+		.exec(function(err, devices){
+			if(err)
 				res.send(err);
-
 			res.json(devices);
 		});
 	});

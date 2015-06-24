@@ -66,7 +66,6 @@
 			this.review.createdOn = Date.now();
 			device.reviews.push(this.review);
 			this.review={};
-			$http.post('http://localhost:3000/api/devices/' + device._id + '/reviews');
 			}
 		};
 
