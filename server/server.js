@@ -6,16 +6,18 @@
 
 
 // needed packages
-var express = require('express');           // call express
-var app = express();                        // define app using express 
+var express = require('express'); // call express
+var app = express(); // define app using express 
 var bodyParser = require('body-parser');
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
-app.use(bodyParser.urlencoded({ extended: true}));
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 3000;        // set our port
+var port = process.env.PORT || 3000; // set our port
 
 // // mongoose setup
 var mongoose = require('mongoose');
@@ -29,7 +31,7 @@ var Review = require("./models/reviews");
 // ROUTES FOR API
 // =====================================================================
 
-var router = express.Router();              // get an instacne of the express Router
+var router = express.Router(); // get an instacne of the express Router
 
 // middleware to use for all requests
 router.use(function(req, res, next) {
@@ -40,7 +42,9 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:3000/api)
 router.get('/', function(req, res) {
-	res.json({ message: 'rad! the api is working!' });
+	res.json({
+		message: 'rad! the api is working!'
+	});
 });
 
 // more routes for our API
@@ -49,148 +53,146 @@ router.get('/', function(req, res) {
 
 router.route('/devices/:device_id/reviews')
 
-.post(function(req, res){
+.post(function(req, res) {
 	var deviceId = req.params.device_id;
-	
-	
+
+
 
 	var review = new Review();
 	review.stars = req.body.stars;
 	review.text = req.body.text;
-	Device.findById(req.params.device_id, function(err, found){
+	review.author = req.body.author;
+	review.createdOn = req.body.createdOn;
+	Device.findById(req.params.device_id, function(err, found) {
 		console.log("you found" + found);
 		found.reviews.push(review);
-		found.save(function(err){
-			if(err)
+		found.save(function(err) {
+			if (err)
 				res.send(err);
 			console.log('review added to device');
 
 		});
 	});
-	
 
-	review.save(function(err){
-		if (err)
+
+	review.save(function(err, doc) {
+		if (err) {
 			res.send(err);
-		res.json({message: 'Review Added!'});
+		}
+		res.json({
+			message: 'Review Added!',
+			data: doc
+		});
 	});
 
 
 })
 
-// .get(function(req, res){
-// 	Review.find()
-// 	.populate('device')
-// 	.exec(function(err, reviews){
-// 		if (err)
-// 			res.send(err);
-
-// 		res.json(reviews);
-// 	});
-// });
-
 .get(function(req, res) {
 	Device.findById(req.params.device_id)
-	.populate('reviews')
-	.exec(function(err, device) {
-		if (err) 
-			res.send(err);
+		.populate('reviews')
+		.exec(function(err, device) {
+			if (err) {
+				res.send(err);
+			}
 
-		res.json(device.reviews);
-	});
+			res.json(device.reviews);
+		});
 });
 
 // routes for /devices
 
 router.route('/devices')
 
-	// create a device (accessed at POST http://localhost:3000/api/devices)
-	.post(function(req, res) {            
-		
-		var device = new Device();           // create a new instance of the Device model
-		device.name = req.body.name;         // set the devices name (comes from the request)
-		device.make = req.body.make;         // set the devices make
-		device.quantity = req.body.quantity  // set the devices quantity
+// create a device (accessed at POST http://localhost:3000/api/devices)
+.post(function(req, res) {
 
-		// save the device and check for errors
-		device.save(function(err) {
-			if (err)
-				res.send(err);
+	var device = new Device(); // create a new instance of the Device model
+	device.name = req.body.name; // set the devices name (comes from the request)
+	device.make = req.body.make; // set the devices make
+	device.quantity = req.body.quantity // set the devices quantity
 
-			res.json({ message: 'Device Created!' });
-		});
-	})
+	// save the device and check for errors
+	device.save(function(err) {
+		if (err) {
+			res.send(err);
+		}
 
-	// get all the devices (accessed at GET http://localhost:3000/api/devices)
-	.get(function(req, res){
-		Device.find()
-		.populate('reviews')
-		.exec(function(err, devices){
-			if(err)
-				res.send(err);
-			res.json(devices);
+		res.json({
+			message: 'Device Created!'
 		});
 	});
+})
+
+// get all the devices (accessed at GET http://localhost:3000/api/devices)
+.get(function(req, res) {
+	Device.find()
+		.populate('reviews')
+		.exec(function(err, devices) {
+			if (err) {
+				res.send(err);
+			}
+			res.json(devices);
+		});
+});
 
 router.route('/devices/:device_id')
 
-  .get(function(req, res){
-  	Device.findById(req.params.device_id)
-  	.populate('reviews')
-  	.exec(function(err, device){
-  		if (err)
-  			res.send(err);
-  		res.json(device);
-  	})
-  })
-
-	//get the device with that id (accessed at GET http://localhost:3000/api/devices/:device_id)
-	// .get(function(req, res) {
-	// 	Device.findById(req.params.device_id, function(err, device) {
-	// 		if (err)
-	// 			res.send(err);
-	// 		console.log(device);
-			
-	// 		res.json(device);
-	// 	})
-
-	// })
-
-	//update the device with this id (accessed at PUT http://localhost:8080/api/devices/:device_id)
-	.put(function(req,res) {
-
-		// use our device model to find the device we want
-		Device.findById(req.params.device_id, function(err, device) {
-
-			if (err)
+//get the device with that id (accessed at GET http://localhost:3000/api/devices/:device_id)
+.get(function(req, res) {
+	Device.findById(req.params.device_id)
+		.populate('reviews')
+		.exec(function(err, device) {
+			if (err) {
 				res.send(err);
+			}
+			res.json(device);
+		})
+})
 
-			device.name = req.body.name;        // update the device name
-			device.make = req.body.make;        // update the device make
-			device.quantity = req.body.quantity // update the quantity
 
-			// save the device
-			device.save(function(err) {
-				if (err)
-					res.send(err);
+//update the device with this id (accessed at PUT http://localhost:8080/api/devices/:device_id)
+.put(function(req, res) {
 
-				res.json({ message: 'Device updated!' });
+	// use our device model to find the device we want
+	Device.findById(req.params.device_id, function(err, device) {
+
+		if (err) {
+			res.send(err);
+		}
+
+		device.name = req.body.name; // update the device name
+		device.make = req.body.make; // update the device make
+		device.quantity = req.body.quantity // update the quantity
+
+		// save the device
+		device.save(function(err) {
+			if (err) {
+				res.send(err);
+			}
+
+			res.json({
+				message: 'Device updated!'
 			});
-
 		});
-	})
 
-	// delete the bear with this id (accessed at DELETE http://local)
-	.delete(function(req, res) {
-		Device.remove({
-			_id: req.params.device_id
-		}, function(err, bear) {
-			if (err)
-				res.send(err);
+	});
+})
 
-			res.json({ message: 'Device successfully deleted' });
+// delete the bear with this id (accessed at DELETE http://local)
+.delete(function(req, res) {
+	Device.remove({
+		_id: req.params.device_id
+	}, function(err, bear) {
+		if (err) {
+			res.send(err);
+		}
+
+		res.json({
+			message: 'Device successfully deleted'
 		});
 	});
+});
 
 // REGISTER ROUTES
 // all routes prefixed with /api
@@ -205,7 +207,7 @@ app.use('/api', router);
 app.listen(port, function() {
 	console.log('Listening on port ' + port);
 });
-	
+
 //Route directory for app client folder
 app.use(express.static(__dirname + '../../client'));
 console.log(__dirname);

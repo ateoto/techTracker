@@ -5,6 +5,8 @@ var Schema = mongoose.Schema;
 var ReviewSchema = Schema ({
 	stars: Number,
 	text: String,
+	author: String,
+	createdOn: Date,
 	device: {
 		type: Schema.Types.ObjectId,
 		ref: "Device"
