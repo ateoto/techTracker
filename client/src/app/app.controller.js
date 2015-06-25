@@ -67,9 +67,17 @@
 				device.reviews.push(this.review);
 				$http.post('http://localhost:3000/api/devices/' + device._id + '/reviews', this.review).then(function(response){
 					console.log(response);
-					this.review={};
 				});
+				this.review={};
 			}
+		};
+
+		this.deleteReview =  function(review, device){
+			console.log(device.reviews.indexOf(review));
+			$http.delete('http://localhost:3000/api/reviews/' + review._id).then(function(response){
+				console.log(response);
+				device.reviews.splice(device.reviews.indexOf(review),1);
+			})
 		};
 	});
 	

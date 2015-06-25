@@ -222,10 +222,12 @@ router.route('/reviews/:review_id')
 		if (err) {
 			res.send(err);
 		}
+		else {
+			res.json({
+				message: 'Review successfully deleted'
+			});
+		}
 
-		res.json({
-			message: 'Review successfully deleted'
-		});
 	});
 });
 

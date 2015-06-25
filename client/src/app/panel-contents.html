@@ -28,7 +28,7 @@
 </div>
 
 <!-- Review Panel Contents -->
-<div class="panel list-group-item" ng-show="panel.isSelected(5)">
+<div class="panel list-group-item" ng-show="panel.isSelected(5)" ng-controller="ReviewController as reviewCtrl">
 	<h4>Reviews</h4>
 	
 	<!-- Posted Reviews -->
@@ -36,13 +36,14 @@
 		<b>{{review.stars}} Stars</b>
 		</br>{{review.text}}
 		<footer><cite>by: {{review.author}} on {{review.createdOn | date}}</cite></footer>
+		<button ng-click="reviewCtrl.deleteReview(review, device)" type="submit" class="pull-right">Delete</button> 
+
 	</blockquote>
 	
 	<h4>Live Preview</h4>
 
 	<!-- Live Preview -->
-	<form name="reviewCtrl.reviewForm" ng-controller="ReviewController as reviewCtrl"
-	ng-submit="reviewCtrl.addReview(device)" novalidate>
+	<form name="reviewCtrl.reviewForm" ng-submit="reviewCtrl.addReview(device)" novalidate>
 		<blockquote>
 			<b>Stars: {{reviewCtrl.review.stars}}</b>
 			</br>{{reviewCtrl.review.text}}
@@ -56,6 +57,9 @@
 				<option value="" disabled selected>Rate this device!</option>
 				<option value="1">1 star</option>
 				<option value="2">2 stars</option>
+				<option value="3">3 stars</option>
+				<option value="4">4 stars</option>
+				<option value="5">5 stars</option>
 			</select>		
 			<label for="reviewText">additonal notes:</label>
 				<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.text" id="reviewBody" placeholder="say what you want!" required></textarea>
