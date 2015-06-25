@@ -56,10 +56,11 @@ router.route('/devices')
 // create a device (accessed at POST http://localhost:3000/api/devices)
 .post(function(req, res) {
 
-	var device = new Device(); // create a new instance of the Device model
-	device.name = req.body.name; // set the devices name (comes from the request)
-	device.make = req.body.make; // set the devices make
-	device.quantity = req.body.quantity // set the devices quantity
+	var device = new Device();             // create a new instance of the Device model
+	device.name = req.body.name;           // set the devices name (comes from the request)
+	device.make = req.body.make;           // set the devices make
+	device.quantity = req.body.quantity    // set the devices quantity
+	device.image = req.body.image          // set the device image
 
 	// save the device and check for errors
 	device.save(function(err) {
@@ -110,9 +111,10 @@ router.route('/devices/:device_id')
 			res.send(err);
 		}
 
-		device.name = req.body.name; // update the device name
-		device.make = req.body.make; // update the device make
-		device.quantity = req.body.quantity // update the quantity
+		device.name = req.body.name;            // update the device name
+		device.make = req.body.make;            // update the device make
+		device.quantity = req.body.quantity     // update the quantity
+		device.image = req.body.image           // update the device image
 
 		// save the device
 		device.save(function(err) {

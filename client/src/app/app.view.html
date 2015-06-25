@@ -3,14 +3,15 @@
 	<div class="col-md-4" ng-repeat="device in tracker.devices">
 		<!-- Device info -->
 		<h1>{{device.name}}</h1>			
-		<h3>{{device.maker | uppercase }}</h3>
+		<h3>{{device.make | uppercase }}</h3>
+		<!-- <div>{{device.image}}</div> -->
 		<h3>{{device.quantity}}</h3>
 		<p>{{device.checkIn | date:'MM/dd/yyyy'}}</p>
 		
 		<!-- Device images -->
 		<div class="gallery" style="width: 400px;">
-			<ul ng-repeat="image in device.images" ng-show="device.images.length">
-				<img class="img center-block" ng-src="{{image.full}}">
+			<ul ng-show="device.image">
+				<img class="img center-block" ng-src="src/assets/images/{{device.image}}">
 			</ul>
 		</div>
 		

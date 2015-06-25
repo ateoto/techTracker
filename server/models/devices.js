@@ -5,6 +5,7 @@ var DeviceSchema = new Schema ({
 	name: String,
 	make: String,
 	quantity: Number,
+	image: String,
 	reviews: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Review' 

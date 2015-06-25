@@ -14,6 +14,13 @@
 
 		$http.get('http://localhost:3000/api/devices').then(function(response){
 			tracker.devices = response.data;
+			for (var i=0; i < tracker.devices.length; i++) {
+				if (tracker.devices[i].quantity >= 1) {
+					tracker.devices[i].inStock = true;
+				}
+			}
+			console.log(tracker.devices);
+
 		});
 
 	});
@@ -26,7 +33,7 @@
 	});
 
 	// Panels
-	app.controller('PanelController', function(){
+	app.controller('PanelController', function($http){
 		this.tab = 1;
 		
 		this.selectTab = function(setTab) {
@@ -41,6 +48,9 @@
 			console.log("You checked out yo!");
 			console.log(device);
 			device.quantity--;
+			$http.put('http://localhost:3000/api/devices/' + device._id, device).then(function(response) {
+				console.log(response);
+			});
 			if (device.quantity === 0) {
 				device.inStock = false;
 			}
@@ -50,6 +60,9 @@
 			console.log("You checked in dawg!");
 			console.log(device);
 			device.quantity++;
+			$http.put('http://localhost:3000/api/devices/' + device._id, device).then(function(response) {
+				console.log(response);
+			});
 			if (device.quantity >= 1) {
 				device.inStock = true;
 			}
