@@ -5,14 +5,14 @@
 	var app =  angular.module('tracker');
 
 	// App Controller
-	app.controller('TrackerController',function($http){
+	app.controller('TrackerController',function(deviceService){
 		var tracker = this;
 
 		this.loggedIn = false;
 
 		tracker.devices = [];
 
-		$http.get('http://localhost:3000/api/devices').then(function(response){
+		deviceService.getAllDevices().then(function(response){
 			tracker.devices = response.data;
 			for (var i=0; i < tracker.devices.length; i++) {
 				if (tracker.devices[i].quantity >= 1) {
@@ -33,7 +33,7 @@
 	});
 
 	// Panels
-	app.controller('PanelController', function($http){
+	app.controller('PanelController', function(deviceService){
 		this.tab = 1;
 		
 		this.selectTab = function(setTab) {
@@ -44,29 +44,32 @@
 			return this.tab === checkTab;
 		};
 		
-		this.checkOut = function(device) {
-			console.log("You checked out yo!");
-			console.log(device);
-			device.quantity--;
-			$http.put('http://localhost:3000/api/devices/' + device._id, device).then(function(response) {
-				console.log(response);
-			});
+		// Check In and Out Devices
+		// ========================
+		this.adjustDeviceCount = function(action, device) {
+			if(action === "checkIn") {
+				console.log("You checked in dawg!");
+				console.log(device);
+				device.quantity++;
+			}
+			else {
+				console.log("You checked out yo!");
+				console.log(device);
+				device.quantity--;
+			}
 			if (device.quantity === 0) {
 				device.inStock = false;
 			}
-		};
-
-		this.checkIn = function(device) {
-			console.log("You checked in dawg!");
-			console.log(device);
-			device.quantity++;
-			$http.put('http://localhost:3000/api/devices/' + device._id, device).then(function(response) {
-				console.log(response);
-			});
-			if (device.quantity >= 1) {
+			else {
 				device.inStock = true;
 			}
-		};
+			deviceService.updateDevice(device).then(function(response) {
+				console.log(response);
+			});
+
+		}
+
+
 	});
 
 	// Reviews
