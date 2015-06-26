@@ -45,15 +45,15 @@
 	<!-- Live Preview -->
 	<form name="reviewCtrl.reviewForm" ng-submit="reviewCtrl.addReview(device)" novalidate>
 		<blockquote>
-			<b>Stars: {{reviewCtrl.review.stars}}</b>
-			</br>{{reviewCtrl.review.text}}
-			<footer><cite>by: {{reviewCtrl.review.author}}</cite></footer>
+			<b>Stars: {{reviewCtrl.newReview.stars}}</b>
+			</br>{{reviewCtrl.newReview.text}}
+			<footer><cite>by: {{reviewCtrl.newReview.author}}</cite></footer>
 		</blockquote>
 		
 		<!-- Review Form -->
 		<div class="form-group">
 			<label for="reviewStars">rating:</label>
-			<select class="form-control" ng-model="reviewCtrl.review.stars" id="reviewStars" required>
+			<select class="form-control" ng-model="reviewCtrl.newReview.stars" id="reviewStars" required>
 				<option value="" disabled selected>Rate this device!</option>
 				<option value="1">1 star</option>
 				<option value="2">2 stars</option>
@@ -62,9 +62,9 @@
 				<option value="5">5 stars</option>
 			</select>		
 			<label for="reviewText">additonal notes:</label>
-				<textarea class="form-control" rows="3" ng-model="reviewCtrl.review.text" id="reviewBody" placeholder="say what you want!" required></textarea>
+				<textarea class="form-control" rows="3" ng-model="reviewCtrl.newReview.text" id="reviewBody" placeholder="say what you want!" required></textarea>
 			<label for="reviewEmail">by:</label>
-			<input ng-model="reviewCtrl.review.author" type="email" class="form-control" id="reviewEmail" placeholder="email" required/>
+			<input ng-model="reviewCtrl.newReview.author" type="email" class="form-control" id="reviewEmail" placeholder="email" required/>
 			</br><input type="submit" class="form-control" value="Submit" ng-disabled="reviewCtrl.reviewForm.$invalid"/>
 		</div>
 		

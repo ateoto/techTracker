@@ -73,24 +73,24 @@
 	});
 
 	// Reviews
-	app.controller('ReviewController', function($http){
-		this.review={};
+	app.controller('ReviewController', function(reviewService){
+		this.newReview={};
 
 		this.addReview = function(device){
 			console.log(device);
 			if (this.reviewForm.$valid) {
-				this.review.createdOn = new Date();
-				device.reviews.push(this.review);
-				$http.post('http://localhost:3000/api/devices/' + device._id + '/reviews', this.review).then(function(response){
+				this.newReview.createdOn = new Date();
+				device.reviews.push(this.newReview);
+				reviewService.addReview(device, this.newReview).then(function(response){
 					console.log(response);
 				});
-				this.review={};
+				this.newReview={};
 			}
 		};
 
 		this.deleteReview =  function(review, device){
 			console.log(device.reviews.indexOf(review));
-			$http.delete('http://localhost:3000/api/reviews/' + review._id).then(function(response){
+			reviewService.deleteReview(review).then(function(response){
 				console.log(response);
 				device.reviews.splice(device.reviews.indexOf(review),1);
 			})
