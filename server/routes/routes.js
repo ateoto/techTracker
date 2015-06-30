@@ -1,8 +1,8 @@
 
 module.exports= function(app, express, passport) {
 
-	var deviceRoutes = require("./devices.js");
-	var reviewRoutes = require("./reviews.js");
+	var deviceRoutes = require("./devices");
+	var reviewRoutes = require("./reviews");
 
 	
 	// ROUTES FOR API
