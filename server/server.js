@@ -8,8 +8,15 @@
 // needed packages
 var express = require('express'); // call express
 var app = express(); // define app using express 
-var bodyParser = require('body-parser');
+var port = process.env.PORT || 3000; // set our port
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash = require('connect-flash');
 
+var morgan = require('morgan');
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var bodyParser = require('body-parser');
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({
@@ -17,235 +24,36 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-var port = process.env.PORT || 3000; // set our port
+// mongodb setup
+var configDB = require('./config/database.js');
+var mongo = mongoose.connect(configDB.url);
 
-// // mongoose setup
-var mongoose = require('mongoose');
-var mongo = mongoose.connect('mongodb://localhost/techTracker');
+// require('./config/passport')(passport); // pass passport for configuration
 
-// // Schema Models @ /models
-var Device = require("./models/devices");
-var Review = require("./models/reviews");
-// var User = require("models/users");
+// set up express application
+app.use(morgan('dev'));
+app.use(cookieParser());
 
-// ROUTES FOR API
-// =====================================================================
+app.set('view engine', 'ejs'); // set up ejs for templating
 
-var router = express.Router(); // get an instacne of the express Router
+// required for passport
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
-// middleware to use for all requests
-router.use(function(req, res, next) {
-	// do logging
-	console.log('Something is happening.');
-	next(); // make sure we go to the next routes and don't stop here
-});
-
-// test route to make sure everything is working (accessed at GET http://localhost:3000/api)
-router.get('/', function(req, res) {
-	res.json({
-		message: 'rad! the api is working!'
-	});
-});
-
-// DEVICES
-// =================================
-
-// routes for /devices
-router.route('/devices')
-
-// create a device (accessed at POST http://localhost:3000/api/devices)
-.post(function(req, res) {
-
-	var device = new Device();             // create a new instance of the Device model
-	device.name = req.body.name;           // set the devices name (comes from the request)
-	device.make = req.body.make;           // set the devices make
-	device.quantity = req.body.quantity    // set the devices quantity
-	device.image = req.body.image          // set the device image
-
-	// save the device and check for errors
-	device.save(function(err) {
-		if (err) {
-			res.send(err);
-		}
-
-		res.json({
-			message: 'Device Created!'
-		});
-	});
-})
-
-// get all the devices (accessed at GET http://localhost:3000/api/devices)
-.get(function(req, res) {
-	Device.find()
-		.populate('reviews')
-		.exec(function(err, devices) {
-			if (err) {
-				res.send(err);
-			}
-			res.json(devices);
-		});
-});
-
-router.route('/devices/:device_id')
-
-//get the device with that id (accessed at GET http://localhost:3000/api/devices/:device_id)
-.get(function(req, res) {
-	Device.findById(req.params.device_id)
-		.populate('reviews')
-		.exec(function(err, device) {
-			if (err) {
-				res.send(err);
-			}
-			res.json(device);
-		})
-})
-
-
-//update the device with this id (accessed at PUT http://localhost:8080/api/devices/:device_id)
-.put(function(req, res) {
-
-	// use our device model to find the device we want
-	Device.findById(req.params.device_id, function(err, device) {
-
-		if (err) {
-			res.send(err);
-		}
-
-		device.name = req.body.name;            // update the device name
-		device.make = req.body.make;            // update the device make
-		device.quantity = req.body.quantity     // update the quantity
-		device.image = req.body.image           // update the device image
-
-		// save the device
-		device.save(function(err) {
-			if (err) {
-				res.send(err);
-			}
-
-			res.json({
-				message: 'Device updated!'
-			});
-		});
-
-	});
-})
-
-// delete the bear with this id (accessed at DELETE http://local)
-.delete(function(req, res) {
-	Device.remove({
-		_id: req.params.device_id
-	}, function(err, bear) {
-		if (err) {
-			res.send(err);
-		}
-
-		res.json({
-			message: 'Device successfully deleted'
-		});
-	});
-});
-
-
-// DEVICE REVIEWS
-// =================================================================
-
-// routes for /reviews
-router.route('/devices/:device_id/reviews')
-
-.post(function(req, res) {
-	var deviceId = req.params.device_id;
-
-	var review = new Review();
-	review.stars = req.body.stars;
-	review.text = req.body.text;
-	review.author = req.body.author;
-	review.createdOn = req.body.createdOn;
-	Device.findById(req.params.device_id, function(err, found) {
-		console.log("you found" + found);
-		found.reviews.push(review);
-		found.save(function(err) {
-			if (err)
-				res.send(err);
-			console.log('review added to device');
-
-		});
-	});
-
-	review.save(function(err, doc) {
-		if (err) {
-			res.send(err);
-		}
-		res.json({
-			message: 'Review Added!',
-			data: doc
-		});
-	});
-})
-
-.get(function(req, res) {
-	Device.findById(req.params.device_id)
-		.populate('reviews')
-		.exec(function(err, device) {
-			if (err) {
-				res.send(err);
-			}
-
-			res.json(device.reviews);
-		});
-});
-
-// REVIEWS
-// ======================================================== 
-
-// route for /reviews/:review_id
-router.route('/reviews/:review_id')
-
-//get the review with that id (accessed at GET http://localhost:3000/api/reviews/:review_id)
-.get(function(req, res) {
-	Review.findById(req.params.review_id, function(err, found) {
-		console.log("you found " + found);
-		if (!found) {
-			res.send("Review with id " + req.params.review_id + " not found");		
-		}
-		else {			
-			res.json({
-				success: true,
-				data: found
-			});
-		}
-	});
-})
-
-// delete the review with that id
-.delete(function(req, res) {
-	Review.remove({
-		_id: req.params.review_id
-	}, function(err, bear) {
-		if (err) {
-			res.send(err);
-		}
-		else {
-			res.json({
-				message: 'Review successfully deleted'
-			});
-		}
-
-	});
-});
-
-// REGISTER ROUTES
-// all routes prefixed with /api
-app.use('/api', router);
-
-
-
-// START THE SERVER
-// ======================================================================
+var setUpRoute = require('./routes/routes.js');
+setUpRoute(app, express ,passport);
 
 //Port listening for node server
 app.listen(port, function() {
 	console.log('Listening on port ' + port);
 });
+
+
+// START THE SERVER
+// ======================================================================
+
 
 //Route directory for app client folder
 app.use(express.static(__dirname + '../../client'));
