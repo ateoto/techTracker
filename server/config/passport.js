@@ -20,9 +20,32 @@ module.exports = function(passport) {
 		done(null, user.id);
 	});
 
+	// used to deserialize the user
 	passport.deserializeUser(function(id, done) {
 		User.findbyId(id, function(err, user) {
 			done(err, user);
 		});
 	});
-}
+
+
+	passport.use('local-login', new LocalStrategy({
+	     // by default, local strategy uses username and password, we will override with email
+	     usernameField : 'email',
+	     passwordField : 'password',
+	     passReqToCallback : true // allows us to pass back the entire request to the callback
+	 },
+	 function(email, done) { // callback with email and password from our form
+
+	     // find a user whose email is the same as the forms email
+	     // we are checking to see if the user trying to login already exists
+	     User.findOne({ 'local.email' :  email }, function(err, user) {
+	         // if there are any errors, return the error before anything else
+	         if (err)
+	             return done(err);
+
+	         // all is well, return successful user
+	         return done(null, user);
+	     });
+
+	 }));
+};

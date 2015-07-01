@@ -17,7 +17,7 @@
 			.state('login', {
 				url: "/login",
 				templateUrl: "src/app/login/login.view.html",
-				controler: "LoginController as login"
+				controller: "LoginController as login"
 			});
 	});
 })();
