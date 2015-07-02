@@ -33,4 +33,11 @@
 
 
 	})
+
+	app.service('loginService', function($http) {
+
+		this.loginSuccess = function(user) {
+			return $http.post('http://localhost:3000/api/login');
+		}
+	})
 })();

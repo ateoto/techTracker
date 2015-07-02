@@ -1,55 +1,38 @@
 module.exports = function(router) {
 
-	var User = require("../models/users");
-	
 
-	// http:localhost:3000/api/users
-	router.route('/users')
+	var User = require('../models/users');
 
-	.post(function(req, res) {
+	router.route('/login')
 
-
-
-		var user = new User();
-		user.firstName = req.body.firstName;
-		user.lastName = req.body.lastName;
-		user.email = req.body.email;
-		user.password = user.generateHash(req.body.password);
-
-		user.save(function(err) {
+	.post(function(req,res) {
+		User.findOne({ 'email': req.body.email }, function(err, user) {
 			if (err) {
 				res.send(err);
+				return;
 			}
+			if (user) {
+				var validUser = new User();
+				if (validUser.validPassword(req.body.password, user.password)){
+					res.json({
+						data: user
+					})
+				}
+				else {
+					res.json({
+						message: "Invalid password"
+					})
+				}
 
-			res.json({
-				message: 'User Created!'
-			});
-		});
+			}
+			else {
+				res.json({
+					message: "User doesn't exist!"
+				})
+			}
+		})
 	})
 
-	.get(function(req, res) {
-		User.find()
-		.exec(function(err,users) {
-			if (err) {
-				res.send(err);
-			}
-			res.json(users);
-		});
-	});
-
-	router.route('users/:user_id')
-
-	.get(function(req, res) {
-		User.findById(req.params.user_id)
-		.exec(function(err,user) {
-			if (err) {
-				res.send(err);
-			}
-			res.json(user);
-		});
-	})
-
-	
 
 
 }
