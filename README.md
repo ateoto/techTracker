@@ -53,9 +53,9 @@ This project uses a node module called ```nodemon``` that essentially just makes
 manually restart the server everytime we make a change to the ```server.js``` file. Nodemon will watch the server.js
 file and automatically restart when changes are made.
 
-To start this server, enter this command into the second terminal window you have open from the root project directory:
+Given that this project has nodemon set up as an alias in the ```package.json``` file, we should be able to start the server up by simply typing into the terminal from the server file:
 ```bash
-cd server && nodemon server.js
+npm start
 ```
 
 And with that you're done! The app is by default set to run at [http://localhost:3000](http://localhost:3000) but you can change it to whatever
