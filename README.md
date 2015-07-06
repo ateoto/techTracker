@@ -23,12 +23,13 @@ npm install bower -g
 ```bash
 bower install
 ```
-This will install the necessary bower components for the front end (Angular, Bootstrap, etc) from the ```bower.json``` file
+This will install the necessary bower components for the front end (Angular, Bootstrap, etc) from the ```bower.json``` file.
 
 3.) Navigate into the server file and install npm components
 ```bash
 sudo npm install
 ```
+This will install the necessary server node modules for the project including MongoDB, ExpressJS, and Mongoose from the ```package.json``` file
 
 With that, you should have everything you need to get techTracker up and running!
 
