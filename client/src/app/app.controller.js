@@ -26,10 +26,18 @@
 	});
 	
 	// Login
-	app.controller('LoginController', function(){
+	app.controller('LoginController', function(loginService){
+		var login = this;
 		
-		this.logIn = function() {
+		this.doLogIn = function() {
+			loginService.login(login.email, login.password).then(function(res) {
+				console.log(res);
+			})
 		};		
+	});
+
+	app.controller('UserController', function(){
+		console.log('UserController');
 	});
 
 	// Panels

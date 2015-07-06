@@ -1,8 +1,10 @@
 
 module.exports= function(app, express, passport) {
 
-	var deviceRoutes = require("./devices.js");
-	var reviewRoutes = require("./reviews.js");
+	var deviceRoutes = require("./devices");
+	var reviewRoutes = require("./reviews");
+	var userRoutes = require("./users");
+	var loginRoutes = require("./login");
 
 	
 	// ROUTES FOR API
@@ -11,6 +13,8 @@ module.exports= function(app, express, passport) {
 	var router =  express.Router(); // get an instance of the express Router
 	deviceRoutes(router);
 	reviewRoutes(router);
+	userRoutes(router);
+	loginRoutes(router);
 
 	// middleware to use for all requests
 	router.use(function(req, res, next) {
