@@ -32,7 +32,7 @@ sudo npm install
 
 With that, you should have everything you need to get techTracker up and running!
 
-## Starting the Server & DataBase Locally:
+## Setup:
 
 You will need two terminal windows open; one for the database and one for the server.
 
