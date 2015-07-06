@@ -36,8 +36,33 @@
 
 	app.service('loginService', function($http) {
 
-		this.loginSuccess = function(user) {
-			return $http.post('http://localhost:3000/api/login');
+		this.login = function(email, password) {
+			return $http.post('http://localhost:3000/api/login', {"email" : email, "password" : password});
+		}
+
+		this.setActiveUser = function(user) {
+			localStorage.setItem('activeUser', JSON.stringify(user));
+		}
+
+		this.getActiveUser = function() {
+			var retrievedUser = localStorage.getItem('activeUser');
+			return JSON.parse(retrievedUser);
+		}
+	})
+
+
+	
+
+
+	app.service('activeRecordService', function() {
+
+		this.getActiveUser = function() {
+
+		}
+
+
+		this.setActiveUser = function() {
+
 		}
 	})
 })();
