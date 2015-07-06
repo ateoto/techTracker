@@ -18,6 +18,12 @@
 				url: "/login",
 				templateUrl: "src/app/login/login.view.html",
 				controller: "LoginController as login"
+			})
+
+			.state('user', {
+				url: "/user",
+				templateUrl: "src/app/user/user.view.html",
+				controller: "UserController as user"
 			});
 	});
 })();
