@@ -48,6 +48,11 @@
 			var retrievedUser = localStorage.getItem('activeUser');
 			return JSON.parse(retrievedUser);
 		}
+
+		this.clearActiveUser = function() {
+			var retrievedUser = localStorage.getItem('activeUser');
+			localStorage.clear(retrievedUser);
+		}
 	})
 
 

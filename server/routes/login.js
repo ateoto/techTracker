@@ -14,21 +14,17 @@ module.exports = function(router) {
 			if (user) {
 				var validUser = new User();
 				if (validUser.validPassword(req.body.password, user.password)){
-					res.json({
-						data: user
-					})
+					res.json(user);
 				}
 				else {
-					res.json({
-						message: "Invalid password"
-					})
+					res.status(401);
+					res.send('Invalid Password');
 				}
 
 			}
 			else {
-				res.json({
-					message: "User doesn't exist!"
-				})
+				res.status(404);
+				res.send('User not found');
 			}
 		})
 	})

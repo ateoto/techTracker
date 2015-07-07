@@ -49,9 +49,9 @@ module.exports = function(router) {
 		});
 	})
 
-	.post(function(req, res) {
+	.put(function(req, res) {
 
-		User.findById(req.params.user_id, function(err, device) {
+		User.findById(req.params.user_id, function(err, user) {
 
 			if(err) {
 				res.send(err);
@@ -62,7 +62,7 @@ module.exports = function(router) {
 			user.email = req.body.email;
 			user.password = user.generateHash(req.body.password);
 
-			device.save(function(err) {
+			user.save(function(err) {
 				if (err) {
 					res.send(err);
 				}

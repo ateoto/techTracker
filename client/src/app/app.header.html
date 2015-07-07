@@ -1,6 +1,7 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
 	<div class="col-md-12">
-		<a id="logo" ui-sref="login">Login</a>
+		<a id="logo" ui-sref="login" ng-hide="isLoggedIn">Login</a>
+		<a id="logo" ui-sref="user" ng-show="isLoggedIn">My Account</a>
 		<a id="logo" ui-sref="app" class="pull-right">Tech Tracker</a>
 	</div>
 </header>

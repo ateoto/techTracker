@@ -2,6 +2,12 @@
 	<div class="container">	
 		<div class="col-md-4">
 			<h2>My Account</h2>
+			<img gravatar-src-once="user.activeUser.email" gravatar-size="200">
+			<h4>NAME:</h4> 
+			<pre>{{user.activeUser.firstName | lowercase}} {{user.activeUser.lastName | lowercase}}</pre>
+			<h4>EMAIL:</h4>
+			<pre>{{user.activeUser.email | lowercase}}</pre>
+			<button type="submit" ng-click="user.doLogout()" class="btn btn-primary">Logout</button>
 		</div>
 	</div>
 </div>

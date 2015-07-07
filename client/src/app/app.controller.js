@@ -24,21 +24,45 @@
 		});
 
 	});
+
+
+
 	
 	// Login
-	app.controller('LoginController', function(loginService){
+	app.controller('LoginController', function($state,$rootScope,loginService){
 		var login = this;
 		
-		this.doLogIn = function() {
+		var retrievedUser = loginService.getActiveUser();
+		if(retrievedUser) {
+			$state.go('user');
+		};
+
+		this.doLogin = function() {
 			loginService.login(login.email, login.password).then(function(res) {
-				console.log(res);
+				loginService.setActiveUser(res.data);
+				$state.go('user');
+				$rootScope.isLoggedIn = true;
+			},function(err) {
+				$state.go('401error');
 			})
+
+
+		};
+
+	});
+
+	app.controller('UserController', function($state,$rootScope, loginService){
+		this.activeUser = loginService.getActiveUser();
+		
+		this.doLogout = function() {
+			loginService.clearActiveUser();
+			$state.go('login');
+			$rootScope.isLoggedIn = false;
 		};		
 	});
 
-	app.controller('UserController', function(){
-		console.log('UserController');
-	});
+
+
 
 	// Panels
 	app.controller('PanelController', function(deviceService){
@@ -79,6 +103,9 @@
 
 
 	});
+
+
+
 
 	// Reviews
 	app.controller('ReviewController', function(reviewService){
