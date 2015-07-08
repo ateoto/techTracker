@@ -49,7 +49,7 @@ mongod --dbpath data
 You are free to set your dbpath to whatever works for you; this is simply the default.
 
 Once you have the DB up and running properly, you should be able to start up the server without error.
-This project uses a node module called ```nodemon``` that eliminates the fuss of making changes to the ```server.js``` file. Nodemon will watch the server.js file and automatically restart when changes are made.
+This project uses a node module called ```nodemon``` that eliminates the fuss of manually restarting the ```server.js``` file when changes are made to the server. Nodemon will watch the server.js file and automatically restart when changes are made.
 
 Given that this project has nodemon set up as an alias in the ```package.json``` file, we should be able to start the server up by simply typing into the terminal from the server file:
 ```bash
