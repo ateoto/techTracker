@@ -53,21 +53,5 @@
 			var retrievedUser = localStorage.getItem('activeUser');
 			localStorage.clear(retrievedUser);
 		}
-	})
-
-
-	
-
-
-	app.service('activeRecordService', function() {
-
-		this.getActiveUser = function() {
-
-		}
-
-
-		this.setActiveUser = function() {
-
-		}
-	})
+	});
 })();

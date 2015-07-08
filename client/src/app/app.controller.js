@@ -5,10 +5,14 @@
 	var app =  angular.module('tracker');
 
 	// App Controller
-	app.controller('TrackerController',function(deviceService){
+	app.controller('TrackerController',function($state, deviceService,loginService){
 		var tracker = this;
 
-		this.loggedIn = false;
+		var retrievedUser = loginService.getActiveUser();
+		if(!retrievedUser) {
+			$state.go('login');
+			console.log("You must login to view devices!");
+		};
 
 		tracker.devices = [];
 
@@ -19,7 +23,7 @@
 					tracker.devices[i].inStock = true;
 				}
 			}
-			console.log(tracker.devices);
+			
 
 		});
 

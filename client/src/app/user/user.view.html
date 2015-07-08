@@ -1,13 +1,17 @@
 <div class="jumbotron">
 	<div class="container">	
-		<div class="col-md-4">
-			<h2>My Account</h2>
-			<img gravatar-src-once="user.activeUser.email" gravatar-size="200">
-			<h4>NAME:</h4> 
-			<pre>{{user.activeUser.firstName | lowercase}} {{user.activeUser.lastName | lowercase}}</pre>
-			<h4>EMAIL:</h4>
-			<pre>{{user.activeUser.email | lowercase}}</pre>
-			<button type="submit" ng-click="user.doLogout()" class="btn btn-primary">Logout</button>
+		<div class="col-md-8">
+			<div class="col-md-5">
+				<img style="text-align:center; padding-top:30px;" gravatar-src-once="user.activeUser.email" gravatar-size="200">
+			</div>
+			<div class="col-md-7">
+				<h2>My Account</h2>			
+				<h4>NAME:</h4> 
+				<pre>{{user.activeUser.firstName | lowercase}} {{user.activeUser.lastName | lowercase}}</pre>
+				<h4>EMAIL:</h4>
+				<pre>{{user.activeUser.email | lowercase}}</pre>
+				<button type="submit" ng-click="user.doLogout()" class="btn btn-primary">Logout</button>
+			</div>
 		</div>
 	</div>
 </div>
