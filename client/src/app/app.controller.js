@@ -55,6 +55,19 @@
 
 	});
 
+	app.controller('RegisterController', function(userService, loginService, $state, $rootScope) {
+		var register = this;
+
+		this.doRegister = function() {
+			userService.addUser(register.firstName, register.lastName, register.email, register.password).then(function(res) {
+				console.log(res.data.user);
+				loginService.setActiveUser(res.data.user);
+				$state.go('user');
+				$rootScope.isLoggedIn = true;
+			})
+		};
+	});
+
 	app.controller('UserController', function($state,$rootScope, loginService){
 		this.activeUser = loginService.getActiveUser();
 		

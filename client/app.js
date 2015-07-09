@@ -29,6 +29,12 @@
 			.state('401error', {
 				url: "/error401",
 				templateUrl: "src/app/login/loginError.view.html"
+			})
+
+			.state('register', {
+				url: "/register",
+				templateUrl: "src/app/login/register.view.html",
+				controller: "RegisterController as register"
 			});
 	});
 	

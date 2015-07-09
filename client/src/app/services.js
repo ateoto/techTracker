@@ -53,5 +53,12 @@
 			var retrievedUser = localStorage.getItem('activeUser');
 			localStorage.clear(retrievedUser);
 		}
-	});
+	})
+
+	app.service('userService', function($http) {
+
+		this.addUser = function(firstName, lastName, email, password) {
+			return $http.post('http://localhost:3000/api/users', {"firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password});
+		}
+	})
 })();

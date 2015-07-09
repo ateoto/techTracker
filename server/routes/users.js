@@ -16,12 +16,13 @@ module.exports = function(router) {
 		user.email = req.body.email;
 		user.password = user.generateHash(req.body.password);
 
-		user.save(function(err) {
+		user.save(function(err,user) {
 			if (err) {
 				res.send(err);
 			}
 
 			res.json({
+				user: user,
 				message: 'User Created!'
 			});
 		});
