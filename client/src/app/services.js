@@ -48,21 +48,17 @@
 			var retrievedUser = localStorage.getItem('activeUser');
 			return JSON.parse(retrievedUser);
 		}
+
+		this.clearActiveUser = function() {
+			var retrievedUser = localStorage.getItem('activeUser');
+			localStorage.clear(retrievedUser);
+		}
 	})
 
+	app.service('userService', function($http) {
 
-	
-
-
-	app.service('activeRecordService', function() {
-
-		this.getActiveUser = function() {
-
-		}
-
-
-		this.setActiveUser = function() {
-
+		this.addUser = function(firstName, lastName, email, password) {
+			return $http.post('http://localhost:3000/api/users', {"firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password});
 		}
 	})
 })();

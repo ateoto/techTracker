@@ -13,3 +13,49 @@
   color: #fff;
   text-decoration: none;
 }
+
+.logo {
+	width: 50%;
+}	
+
+
+.login-form {
+	width: 500px;
+	height: 40%;
+	margin: 0px auto;
+	padding-top: 250px;
+}
+
+
+.jumbotron {
+	background: transparent;
+}
+
+
+
+#jumbotron-login {
+	margin: auto;
+	border-radius: 30px;
+	color: #FFFEFA;
+	background-color: #3E495E;
+	padding: 10px 30px 60px 30px;
+	
+}
+
+#jumbotron-login h2 {
+	padding-top: 0px;
+}
+
+.login-background {
+	background: url(images/login_background.jpg);
+	background-size: cover;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
+
+
+.form-group span {
+	color: red;
+}
+

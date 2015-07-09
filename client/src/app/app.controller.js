@@ -5,10 +5,14 @@
 	var app =  angular.module('tracker');
 
 	// App Controller
-	app.controller('TrackerController',function(deviceService){
+	app.controller('TrackerController',function($state, deviceService,loginService){
 		var tracker = this;
 
-		this.loggedIn = false;
+		var retrievedUser = loginService.getActiveUser();
+		if(!retrievedUser) {
+			$state.go('login');
+			console.log("You must login to view devices!");
+		};
 
 		tracker.devices = [];
 
@@ -19,26 +23,63 @@
 					tracker.devices[i].inStock = true;
 				}
 			}
-			console.log(tracker.devices);
+			
 
 		});
 
 	});
+
+
+
 	
 	// Login
-	app.controller('LoginController', function(loginService){
+	app.controller('LoginController', function($state,$rootScope,loginService){
 		var login = this;
 		
-		this.doLogIn = function() {
+		var retrievedUser = loginService.getActiveUser();
+		if(retrievedUser) {
+			$state.go('user');
+		};
+
+		this.doLogin = function() {
 			loginService.login(login.email, login.password).then(function(res) {
-				console.log(res);
+				loginService.setActiveUser(res.data);
+				$state.go('user');
+				$rootScope.isLoggedIn = true;
+			},function(err) {
+				$state.go('401error');
 			})
+
+
+		};
+
+	});
+
+	app.controller('RegisterController', function(userService, loginService, $state, $rootScope) {
+		var register = this;
+
+		this.doRegister = function() {
+			userService.addUser(register.firstName, register.lastName, register.email, register.password).then(function(res) {
+				console.log(res.data.user);
+				loginService.setActiveUser(res.data.user);
+				$state.go('user');
+				$rootScope.isLoggedIn = true;
+			})
+		};
+	});
+
+	app.controller('UserController', function($state,$rootScope, loginService){
+		this.activeUser = loginService.getActiveUser();
+		
+		this.doLogout = function() {
+			loginService.clearActiveUser();
+			$state.go('login');
+			$rootScope.isLoggedIn = false;
 		};		
 	});
 
-	app.controller('UserController', function(){
-		console.log('UserController');
-	});
+
+
 
 	// Panels
 	app.controller('PanelController', function(deviceService){
@@ -79,6 +120,9 @@
 
 
 	});
+
+
+
 
 	// Reviews
 	app.controller('ReviewController', function(reviewService){

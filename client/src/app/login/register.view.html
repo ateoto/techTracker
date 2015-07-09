@@ -1,0 +1,47 @@
+<div class="login-background">
+	<div class="container">
+		<div class="login-form">
+			<img src="src/assets/images/techTracker.svg">	
+			<form name="registerForm" id="jumbotron-login" ng-submit="register.doRegister()">
+				<h3>Create an Account</h3>
+				<div class="form-group">
+					<label class="pull-left" for="firstName">
+						<h4>First name</h4>
+					</label>
+					<input type="text" name="firstName" id="firstName" class="form-control" ng-model="register.firstName" required />
+				</div>
+				<div class="form-group">
+					<label class="pull-left" for="lastName">
+						<h4>Last name</h4>
+					</label>
+					<input type="text" name="lastName" id="lastName" class="form-control" ng-model="register.lastName" required />
+				</div>
+				<div class="form-group">
+					<label class="pull-left" for="username">
+						<h4>Email</h4>
+					</label>
+					<input type="email" name="email" id="email" class="form-control" ng-model="register.email" ng-pattern="/([a-zA-Z]\w+@moduscreate.com)/g" required />
+					<span ng-show="registerForm.email.$error.pattern">Not a Modus Create e-mail! Please try again.</span>
+				</div>
+				<div class="form-group">
+					<label class="pull-left" for="password">
+						<h4>Password</h4>
+					</label>
+					<input type="password" name="password" id="password" class="form-control" ng-model="register.password" required />
+				</div>
+<!-- 				<div class="form-group">
+					<label class="pull-left" for="password">
+						<h4>Confirm Password</h4>
+					</label>
+					<input type="password" name="confirmPassword" id="confirmPassword" class="form-control" ng-model="register.confirmPassword" required />
+				</div> -->
+				<div class="form-actions">
+					<h5 class="pull-left">
+						Already registered? <a ui-sref="login">Login now!</a>
+					</h5>
+					<button type="submit" class="btn btn-primary pull-right">Register</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

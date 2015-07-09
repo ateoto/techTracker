@@ -1,6 +1,6 @@
-<header class="navbar navbar-fixed-top navbar-inverse">
+<header class="navbar navbar-fixed-top navbar-inverse" ng-show="isLoggedIn">
 	<div class="col-md-12">
-		<a id="logo" ui-sref="login">Login</a>
-		<a id="logo" ui-sref="app" class="pull-right">Tech Tracker</a>
+		<a id="logo" ui-sref="user" ng-show="isLoggedIn">My Account</a>
+		<a id="logo" ui-sref="app" class="pull-right">Devices</a>
 	</div>
 </header>
