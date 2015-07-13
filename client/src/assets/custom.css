@@ -1,12 +1,18 @@
+@import url('http://fonts.googleapis.com/css?family=Oswald+Bold+700');
+
+.navbar-color {
+	background-color: #3E495E;
+	border-color: #3E495E;
+}
+
 #logo {
 	float: left;
 	margin-right: 10px;
-	font-size: 1.7em;
-	color: #fff;
-	text-transform: uppercase;
+	font-size: 1.8em;
+	color: #FFFEFA;
 	letter-spacing: -1px;
 	padding-top: 9px;
-	font-weight: bold;
+	font-family: "Oswald", sans-serif;
 }
 
 #logo:hover {
@@ -18,6 +24,11 @@
 	width: 50%;
 }	
 
+.logo-header {
+	width: 35%;
+	margin-left: -10px;
+	margin-bottom: 10px;
+}
 
 .login-form {
 	width: 500px;

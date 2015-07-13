@@ -38,6 +38,7 @@ module.exports = function(router) {
 	.get(function(req, res) {
 		Device.find()
 			.populate('reviews')
+			.populate('checkedOutBy')
 			.exec(function(err, devices) {
 				if (err) {
 					res.send(err);
@@ -104,4 +105,30 @@ module.exports = function(router) {
 			});
 		});
 	});
+
+
+	router.route('/devices/:device_id/checkOut')
+
+	.put(function(req, res) {
+
+		Device.findById(req.params.device_id, function(err, device) {
+
+			if (err) {
+				res.send(err);
+			}
+
+			device.checkedOutBy = req.body.checkedOutBy;
+			device.checkOutDate = new Date();
+
+			device.save(function(err) {
+				if (err) {
+					res.send(err);
+				}
+
+				res.json({
+					message: 'Device successfully checked out'
+				});
+			});
+		});
+	})
 }

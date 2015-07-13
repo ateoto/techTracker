@@ -44,7 +44,7 @@
 		this.doLogin = function() {
 			loginService.login(login.email, login.password).then(function(res) {
 				loginService.setActiveUser(res.data);
-				$state.go('user');
+				$state.go('app');
 				$rootScope.isLoggedIn = true;
 			},function(err) {
 				$state.go('401error');
@@ -62,7 +62,7 @@
 			userService.addUser(register.firstName, register.lastName, register.email, register.password).then(function(res) {
 				console.log(res.data.user);
 				loginService.setActiveUser(res.data.user);
-				$state.go('user');
+				$state.go('app');
 				$rootScope.isLoggedIn = true;
 			})
 		};
@@ -95,29 +95,7 @@
 		
 		// Check In and Out Devices
 		// ========================
-		this.adjustDeviceCount = function(action, device) {
-			if(action === "checkIn") {
-				console.log("You checked in dawg!");
-				console.log(device);
-				device.quantity++;
-			}
-			else {
-				console.log("You checked out yo!");
-				console.log(device);
-				device.quantity--;
-			}
-			if (device.quantity === 0) {
-				device.inStock = false;
-			}
-			else {
-				device.inStock = true;
-			}
-			deviceService.updateDevice(device).then(function(response) {
-				console.log(response);
-			});
-
-		}
-
+		
 
 	});
 

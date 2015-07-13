@@ -1,7 +1,8 @@
 <!-- nav pills for adding new panels to the nav below each device -->
 <ul class="nav nav-pills block-center">
 	<li ng-class="{ active:panel.isSelected(1) }">
-		<a href ng-click="panel.selectTab(1)" ng-show="device.inStock">Check Out</a>
+		<a ng-hide="device.checkedOutBy">Check Out</a>
+		<!-- <a href ng-click="panel.selectTab(1)" ng-show="device.inStock">Check Out</a> -->
 	</li>
 	<li ng-class="{ active:panel.isSelected(2) }">
 		<a href ng-click="panel.selectTab(2)">Check In</a>

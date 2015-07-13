@@ -9,7 +9,12 @@ var DeviceSchema = new Schema ({
 	reviews: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Review' 
-	}]
+	}],
+	checkedOutBy: {
+		type: Schema.Types.ObjectId,
+		ref: 'User'
+	},
+	checkOutDate: Date
 });
 
 
