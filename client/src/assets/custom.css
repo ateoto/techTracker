@@ -70,3 +70,29 @@
 	color: red;
 }
 
+.sidebar-nav-custom {
+	top: 51px;
+	background-color: #f6f6f6;
+	border-right: 1px solid #eee;
+	height: 100%;
+}
+
+.sidebar-nav-text {
+	font-size: 1.5em;
+	font-family: "Oswald", sans-serif;
+	color: #333333;
+}
+
+.main .page-header {
+	margin-top: -80px;
+}
+
+.sub-header {
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}

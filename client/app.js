@@ -6,11 +6,11 @@
 	app.config(function($stateProvider, $urlRouterProvider) {
 		
 		// For any unmatched url, send to /state1
-		$urlRouterProvider.otherwise('/')
+		$urlRouterProvider.otherwise('/home')
 
 		$stateProvider
 			.state('app', {
-				url: "/",
+				url: "/home",
 				templateUrl: "src/app/app.view.html",
 				controller: "TrackerController as tracker"
 			})

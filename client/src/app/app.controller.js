@@ -8,8 +8,8 @@
 	app.controller('TrackerController',function($state, deviceService,loginService){
 		var tracker = this;
 
-		var retrievedUser = loginService.getActiveUser();
-		if(!retrievedUser) {
+		var activeUser = loginService.getActiveUser();
+		if(!activeUser) {
 			$state.go('login');
 			console.log("You must login to view devices!");
 		};
@@ -17,15 +17,18 @@
 		tracker.devices = [];
 
 		deviceService.getAllDevices().then(function(response){
-			tracker.devices = response.data;
-			for (var i=0; i < tracker.devices.length; i++) {
-				if (tracker.devices[i].quantity >= 1) {
-					tracker.devices[i].inStock = true;
-				}
-			}
 			
+			tracker.makes= _.groupBy(response.data, "make");
+			console.log(tracker.makes)
 
+			// tracker.devices = response.data;
 		});
+
+		this.checkOutDevice = function(device) {
+			deviceService.checkOutDevice(device, activeUser).then(function() {
+				device.checkedOutBy = activeUser;
+			})
+		} 
 
 	});
 
@@ -95,7 +98,7 @@
 		
 		// Check In and Out Devices
 		// ========================
-		
+
 
 	});
 

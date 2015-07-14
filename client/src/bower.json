@@ -10,6 +10,7 @@
     "angular": "~1.3.11",
     "bootstrap": "~3.3.2",
     "angular-ui-router": "0.2.15",
-    "angular-gravatar": "latest"
+    "angular-gravatar": "latest",
+    "lodash": "~3.10.0"
   }
 }

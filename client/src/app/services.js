@@ -17,7 +17,7 @@
 		}
 
 		this.checkOutDevice = function(device, user) {
-			return $http.put('http://localhost:3000/api/devices/' + device._id + '/checkOut', {"checkOutBy" : user._id})
+			return $http.put('http://localhost:3000/api/devices/' + device._id + '/checkOut', {"checkedOutBy" : user._id})
 		}
 
 	})
