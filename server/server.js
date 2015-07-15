@@ -24,8 +24,14 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+
+if (process.env.NODE_ENV === "development") {
+	var configDB = require('./config/localdatabase.js');
+} else {
+    var configDB = require('./config/docker.js');
+}
+
 // mongodb setup
-var configDB = require('./config/database.js');
 var mongo = mongoose.connect(configDB.url);
 
 // set up express application
