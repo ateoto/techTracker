@@ -1,0 +1,9 @@
+server:
+	image: andrewowen/techtracker-server:latest
+	ports:
+		- "80:3000"
+	links:
+		- "mongo:db"
+
+mongo:
+	image: mongo:latest
