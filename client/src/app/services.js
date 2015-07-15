@@ -20,6 +20,10 @@
 			return $http.put('http://localhost:3000/api/devices/' + device._id + '/checkOut', {"checkedOutBy" : user._id})
 		}
 
+		this.checkInDevice = function(device) {
+			return $http.put('http://localhost:3000/api/devices/' + device._id + '/checkIn'); 
+		}
+
 	})
 
 
@@ -62,6 +66,10 @@
 
 		this.addUser = function(firstName, lastName, email, password) {
 			return $http.post('http://localhost:3000/api/users', {"firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password});
+		}
+
+		this.getUser = function(user) {
+			return $http.get('http://localhost:3000/api/users/' + user._id + "/devices");
 		}
 	})
 })();

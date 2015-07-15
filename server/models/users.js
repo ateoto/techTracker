@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
+var Device = require('./devices');
 var Schema = mongoose.Schema;
 
 var UserSchema = new mongoose.Schema ({
@@ -8,10 +9,6 @@ var UserSchema = new mongoose.Schema ({
 	lastName: String,
 	email: String,
 	password: String,
-	device: {
-		type: Schema.Types.ObjectId,
-		ref: "Device"
-	}
 
 });
 

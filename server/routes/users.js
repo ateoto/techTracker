@@ -1,6 +1,7 @@
 module.exports = function(router) {
 
 	var User = require("../models/users");
+	var Device = require("../models/devices");
 	
 
 	// http:localhost:3000/api/users
@@ -89,7 +90,17 @@ module.exports = function(router) {
 		});
 	});
 
+	router.route('/users/:user_id/devices')
 
+	.get(function(req, res) {
+		Device.find({ "checkedOutBy" : req.params.user_id})
+		.exec(function(err, devices) {
+			if(err) {
+				res.send(err);
+			}
+			res.json(devices);
+		});
 
+	});
 
 }

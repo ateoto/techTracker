@@ -1,6 +1,9 @@
-<header class="navbar navbar-fixed-top navbar-color" ng-show="isLoggedIn">
+<header class="navbar navbar-fixed-top navbar-color" ng-show="isLoggedIn" ng-controller="UserController as user">
 	<div class="col-md-12">
 		<a id="logo" ui-sref="app" ng-show="isLoggedIn"><img class="logo-header" src="src/assets/images/techTracker.svg"></a>
-		<a id="logo" ui-sref="user" class="pull-right">my account</a>
+		<a id="logo" ui-sref="user" class="pull-right">
+		<img style="text-align:center;padding-right:10px;" gravatar-src-once="user.activeUser.email" gravatar-size="35">{{user.activeUser.firstName}} {{user.activeUser.lastName}}
+		</a>
+		
 	</div>
 </header>

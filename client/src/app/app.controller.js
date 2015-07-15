@@ -8,8 +8,8 @@
 	app.controller('TrackerController',function($state, deviceService,loginService){
 		var tracker = this;
 
-		var activeUser = loginService.getActiveUser();
-		if(!activeUser) {
+		tracker.activeUser = loginService.getActiveUser();
+		if(!tracker.activeUser) {
 			$state.go('login');
 			console.log("You must login to view devices!");
 		};
@@ -25,10 +25,17 @@
 		});
 
 		this.checkOutDevice = function(device) {
-			deviceService.checkOutDevice(device, activeUser).then(function() {
-				device.checkedOutBy = activeUser;
+			deviceService.checkOutDevice(device, tracker.activeUser).then(function() {
+				device.checkedOutBy = tracker.activeUser;
 			})
-		} 
+		};
+
+		this.checkInDevice = function(device) {
+			deviceService.checkInDevice(device).then(function() {
+				delete device.checkedOutBy;
+				device.checkedOutBy = false;
+			})
+		}
 
 	});
 
@@ -71,11 +78,16 @@
 		};
 	});
 
-	app.controller('UserController', function($state,$rootScope, loginService){
-		this.activeUser = loginService.getActiveUser();
+	app.controller('UserController', function($state,$rootScope, loginService, userService){
+		console.log('userController');
+		var userController = this;
+
+		userController.activeUser = loginService.getActiveUser();
+		userService.getUser(userController.activeUser);
 		
-		this.doLogout = function() {
+		userController.doLogout = function() {
 			loginService.clearActiveUser();
+			userController.activeUser = null;
 			$state.go('login');
 			$rootScope.isLoggedIn = false;
 		};		

@@ -1,3 +1,4 @@
+<tt-app-header></tt-app-header>
 <div class="jumbotron">
 	<div class="container">	
 		<div class="col-md-8">
@@ -10,6 +11,8 @@
 				<pre>{{user.activeUser.firstName | lowercase}} {{user.activeUser.lastName | lowercase}}</pre>
 				<h4>EMAIL:</h4>
 				<pre>{{user.activeUser.email | lowercase}}</pre>
+				<h4>DEVICES I HAVE CHECKED OUT:</h4>
+				<pre>{{user.activeUser.devices | lowercase}}</pre>
 				<button type="submit" ng-click="user.doLogout()" class="btn btn-primary">Logout</button>
 			</div>
 		</div>

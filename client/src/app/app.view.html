@@ -1,3 +1,4 @@
+<tt-app-header></tt-app-header>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-3 col-md-2 sidebar sidebar-nav-custom">
@@ -27,7 +28,8 @@
 								<th style="width: 15%">Name:</th>
 								<th style="width: 20%">SKU:</th>
 								<th style="width: 25%">Checked out to:</th>
-								<th>Check Out:</th>
+								<th style="width: 20%">Check Out:</th>
+								<th>Check In:</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -39,6 +41,7 @@
 								<td>{{device.sku}}</td>
 								<td>{{device.checkedOutBy.firstName}} {{device.checkedOutBy.lastName}}</td>
 								<td><button class="btn btn-primary" ng-hide="device.checkedOutBy" ng-click="tracker.checkOutDevice(device)">Check Out</button></td>
+								<td><button class="btn btn-primary" ng-show="device.checkedOutBy" ng-if="device.checkedOutBy._id === tracker.activeUser._id" ng-click="tracker.checkInDevice(device)">Check In</button></td>
 							</tr>
 						</tbody>
 					</table>

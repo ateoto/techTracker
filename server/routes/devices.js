@@ -131,4 +131,29 @@ module.exports = function(router) {
 			});
 		});
 	})
+
+	router.route('/devices/:device_id/checkIn')
+
+	.put(function(req, res) {
+
+		Device.findById(req.params.device_id, function(err, device) {
+
+			if (err) {
+				res.send(err);
+			}
+
+			device.checkedOutBy = undefined;
+			device.checkInDate = new Date();
+
+			device.save(function(err) {
+				if(err) {
+					res.send(err);
+				}
+
+				res.json({
+					message: 'Device successfully checked in'
+				});
+			});
+		});
+	})
 }

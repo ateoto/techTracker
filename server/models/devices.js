@@ -14,7 +14,8 @@ var DeviceSchema = new Schema ({
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
-	checkOutDate: Date
+	checkOutDate: Date,
+	checkInDate: Date
 });
 
 
