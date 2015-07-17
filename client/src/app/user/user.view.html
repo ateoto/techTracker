@@ -12,7 +12,9 @@
 				<h4>EMAIL:</h4>
 				<pre>{{user.activeUser.email | lowercase}}</pre>
 				<h4>DEVICES I HAVE CHECKED OUT:</h4>
-				<pre>{{user.activeUser.devices | lowercase}}</pre>
+				<pre>
+				<p class="list-device" ng-repeat="device in user.devices"> - {{device}}</p>
+				</pre>
 				<button type="submit" ng-click="user.doLogout()" class="btn btn-primary">Logout</button>
 			</div>
 		</div>

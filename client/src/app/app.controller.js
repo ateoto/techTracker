@@ -79,11 +79,21 @@
 	});
 
 	app.controller('UserController', function($state,$rootScope, loginService, userService){
-		console.log('userController');
 		var userController = this;
 
 		userController.activeUser = loginService.getActiveUser();
-		userService.getUser(userController.activeUser);
+		userService.getUserDevices(userController.activeUser).then(function(data) {
+			var devices = [];
+			var deviceData = data;
+			angular.forEach(deviceData, function(outerValue, outerKey) {
+				angular.forEach(outerValue, function(value, key) {
+					if(key === "name") {
+						devices.push(value);
+					}
+				});
+			})
+			userController.devices = devices;
+		})
 		
 		userController.doLogout = function() {
 			loginService.clearActiveUser();

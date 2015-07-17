@@ -1,8 +1,19 @@
-@import url('http://fonts.googleapis.com/css?family=Oswald+Bold+700');
+/*@import url('http://fonts.googleapis.com/css?family=Oswald+Bold+700');*/
+
+
+.jumbotron .list-device {
+	font-size: 1.0em;
+}
+
+
 
 .navbar-color {
 	background-color: #3E495E;
 	border-color: #3E495E;
+}
+
+.navbar-fixed-top {
+	position: fixed;
 }
 
 #logo {
@@ -37,6 +48,13 @@
 	padding-top: 250px;
 }
 
+.login-background {
+	background: url(images/login_background.jpg);
+	background-size: cover;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+}
 
 .jumbotron {
 	background: transparent;
@@ -57,13 +75,6 @@
 	padding-top: 0px;
 }
 
-.login-background {
-	background: url(images/login_background.jpg);
-	background-size: cover;
-	position: absolute;
-	height: 100%;
-	width: 100%;
-}
 
 
 .form-group span {

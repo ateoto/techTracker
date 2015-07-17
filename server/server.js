@@ -12,13 +12,16 @@ var port = process.env.PORT || 3000; // set our port
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
-
+var cors = require('cors');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 // configure app to use bodyParser()
 // this will let us get the data from a POST
+
+app.use(cors());
+
 app.use(bodyParser.urlencoded({
 	extended: true
 }));

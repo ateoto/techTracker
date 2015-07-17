@@ -62,14 +62,20 @@
 		}
 	})
 
-	app.service('userService', function($http) {
+	app.service('userService', function($q, $http) {
 
 		this.addUser = function(firstName, lastName, email, password) {
 			return $http.post('http://localhost:3000/api/users', {"firstName" : firstName, "lastName" : lastName, "email" : email, "password" : password});
 		}
 
-		this.getUser = function(user) {
-			return $http.get('http://localhost:3000/api/users/' + user._id + "/devices");
+		this.getUserDevices = function(user) {
+			var deferred = $q.defer();
+
+			$http.get('http://localhost:3000/api/users/' + user._id + "/devices").success(function(data) {
+				deferred.resolve(data);
+			});
+
+			return deferred.promise;
 		}
 	})
 })();
